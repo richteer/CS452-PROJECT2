@@ -1,12 +1,14 @@
-#include <GL/gl.h>
-#include <GL/glu.h>
+//#include <GL/gl.h>
+//#include <GL/glu.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 #include "renderer.h"
 
 
 void render(RenderObject * obj)
 {
-	int vao, vbo;
-
+	GLuint vao, vbo;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glGenVertexArrays(1, &vao);

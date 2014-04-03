@@ -3,13 +3,14 @@
 #include <GL/glu.h>
 #include <GLFW/glfw3.h>
 #include "renderobject.h"
+#include "renderer.h"
 #include "init_stuff.h"
 
 int prog;
 
 void init(void)
 {
-	prog = init_program(4, "vshader.glsl", GL_VERTEX_SHADER, "fshader.glsl", GL_FRAGMENT_SHADER);
+	prog = init_program(2, "vshader.glsl", GL_VERTEX_SHADER); //, "fshader.glsl", GL_FRAGMENT_SHADER);
 	glUseProgram(prog);
 	glEnable(GL_DEPTH_TEST);
 }
@@ -18,14 +19,14 @@ int main(int argc, char** argv)
 {
 	GLFWwindow* window;
 
-	float temp[4 << 1] {
+	float temp[8] = {
 		-0.5f,-0.5f,
 		-0.5f, 0.5f,
 		 0.5f, 0.5f,
 		 0.5f,-0.5f
-	}
+	};
 
-	renderObject test = new test(temp,4<<1);
+	RenderObject *test = new RenderObject(temp,8);
 
 
 	/* Initialize the library */
@@ -47,7 +48,7 @@ int main(int argc, char** argv)
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
-		render(&test);
+		render(test);
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);

@@ -4,7 +4,7 @@
 
 #include "renderobject.h"
 
-bool init(void);
-void render(RenderObject);
+//bool init(void);
+void render(RenderObject*);
 
 #endif
