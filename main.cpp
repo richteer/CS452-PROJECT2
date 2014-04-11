@@ -28,7 +28,6 @@ void init(void)
 	}
 
 	glUseProgram(prog);
-	glEnable(GL_DEPTH_TEST);
 }
 
 void show_stuff(void)
@@ -36,10 +35,24 @@ void show_stuff(void)
 	render(test);
 }
 
+void on_key(unsigned char c, int x, int y)
+{
+	switch(c) {
+		case 'a':
+			test->modAngle(-0.1f);
+			break;		
+		case 'd':
+			test->modAngle(0.1f);
+			break;		
+	}
+
+	glutPostRedisplay();
+}
+
 int main(int argc, char** argv)
 {
 	glutInit(&argc,argv);
-	glutCreateWindow("Lab 2");
+	glutCreateWindow("Blerp");
 
 	glutInitContextVersion(4,3);
 	glutInitContextProfile(GLUT_CORE_PROFILE | GLUT_COMPATIBILITY_PROFILE);
@@ -47,7 +60,7 @@ int main(int argc, char** argv)
 	init();
 	
 	glutDisplayFunc(show_stuff);
-	//glutKeyboardFunc(on_key);
+	glutKeyboardFunc(on_key);
 	glutMainLoop();
 
 	return 0;
