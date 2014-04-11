@@ -16,9 +16,9 @@ void render(RenderObject * obj)
 	glGenBuffers(1, &vbo);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(int), obj->data, GL_STATIC_DRAW); 
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*obj->size, obj->data, GL_STATIC_DRAW); 
 
-	glDrawArrays(GL_LINE_STRIP, 0, obj->datanum);
+	glDrawArrays(GL_TRIANGLES, 0, obj->size);
 
 	glFlush();
 }

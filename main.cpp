@@ -10,19 +10,18 @@
 
 unsigned int prog;
 
-float temp[8] = {
-	-0.5f,-0.5f,
-	-0.5f, 0.5f,
-	 0.5f, 0.5f,
-	 0.5f,-0.5f
+float temp[12] = {
+	-0.5f,-0.5f,0.0f,
+	-0.5f, 0.5f,0.0f,
+	 0.5f, 0.5f,0.0f,
+	 0.5f,-0.5f,0.0f
 };
 
-RenderObject *test = new RenderObject(temp,8);
-
+RenderObject *test = new RenderObject(temp,12);
 
 void init(void)
 {
-	prog = init_program(2, "vshader.glsl", GL_VERTEX_SHADER);
+	prog = init_program(4, "vshader.glsl", GL_VERTEX_SHADER,"fshader.glsl", GL_FRAGMENT_SHADER);
 	if (prog < 0) {
 		fprintf(stderr,"Error: could not initialize program, bailing...\n");
 		exit(1);
@@ -35,9 +34,7 @@ void init(void)
 void show_stuff(void)
 {
 	render(test);
-
 }
-
 
 int main(int argc, char** argv)
 {

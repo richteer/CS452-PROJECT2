@@ -32,7 +32,7 @@ class RenderObject {
 		void move(void);
 
 		COORD_TYPE* data;
-		int datanum;
+		int size;
 
 	private:
 		point pos;

@@ -11,6 +11,7 @@ RenderObject::RenderObject(COORD_TYPE* points, int sz)
 
 	for (i = 0; i < sz; i++)
 		this->data[i] = points[i];
+	this->size = sz;
 }
 
 RenderObject::~RenderObject()
