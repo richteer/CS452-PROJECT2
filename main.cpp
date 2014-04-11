@@ -1,66 +1,58 @@
-#include <iostream>
-#include <GL/glew.h>
+#define GL_GLEXT_PROTOTYPES
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <GLFW/glfw3.h>
+#include <GL/freeglut.h>
+#include <stdio.h>
+
+#include "init_stuff.h"
 #include "renderobject.h"
 #include "renderer.h"
-#include "init_stuff.h"
 
-int prog;
+unsigned int prog;
+
+float temp[8] = {
+	-0.5f,-0.5f,
+	-0.5f, 0.5f,
+	 0.5f, 0.5f,
+	 0.5f,-0.5f
+};
+
+RenderObject *test = new RenderObject(temp,8);
+
 
 void init(void)
 {
-	prog = init_program(2, "vshader.glsl", GL_VERTEX_SHADER); //, "fshader.glsl", GL_FRAGMENT_SHADER);
+	prog = init_program(2, "vshader.glsl", GL_VERTEX_SHADER);
+	if (prog < 0) {
+		fprintf(stderr,"Error: could not initialize program, bailing...\n");
+		exit(1);
+	}
+
 	glUseProgram(prog);
 	glEnable(GL_DEPTH_TEST);
-
-	glewExperimental = true;
-	glewInit();
 }
+
+void show_stuff(void)
+{
+	render(test);
+
+}
+
 
 int main(int argc, char** argv)
 {
-	GLFWwindow* window;
+	glutInit(&argc,argv);
+	glutCreateWindow("Lab 2");
 
-	float temp[8] = {
-		-0.5f,-0.5f,
-		-0.5f, 0.5f,
-		 0.5f, 0.5f,
-		 0.5f,-0.5f
-	};
+	glutInitContextVersion(4,3);
+	glutInitContextProfile(GLUT_CORE_PROFILE | GLUT_COMPATIBILITY_PROFILE);
 
-	RenderObject *test = new RenderObject(temp,8);
+	init();
+	
+	glutDisplayFunc(show_stuff);
+	//glutKeyboardFunc(on_key);
+	glutMainLoop();
 
-
-	/* Initialize the library */
-	if (!glfwInit())
-		return -1;
-
-	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-	if (!window)
-	{
-		glfwTerminate();
-		return -1;
-	}
-
-	/* Make the window's context current */
-	glfwMakeContextCurrent(window);
-
-	/* Loop until the user closes the window */
-	while (!glfwWindowShouldClose(window))
-	{
-		/* Render here */
-		render(test);
-
-		/* Swap front and back buffers */
-		glfwSwapBuffers(window);
-
-		/* Poll for and process events */
-		glfwPollEvents();
-	}
-
-	glfwTerminate();
 	return 0;
 }
+
