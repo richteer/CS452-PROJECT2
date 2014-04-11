@@ -1,4 +1,5 @@
 #include <iostream>
+#include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GLFW/glfw3.h>
@@ -13,6 +14,9 @@ void init(void)
 	prog = init_program(2, "vshader.glsl", GL_VERTEX_SHADER); //, "fshader.glsl", GL_FRAGMENT_SHADER);
 	glUseProgram(prog);
 	glEnable(GL_DEPTH_TEST);
+
+	glewExperimental = true;
+	glewInit();
 }
 
 int main(int argc, char** argv)
