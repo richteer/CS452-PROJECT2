@@ -1,5 +1,6 @@
 CPP=g++
 CC=gcc
+CPPFLAGS=--std=c++11
 
 all: main
 
@@ -7,16 +8,16 @@ main: main.o renderobject.o renderer.o init_stuff.o
 	${CPP} -o $@ $^ -lGL -lglut
 
 main.o: main.cpp
-	${CPP} -c -g $<
+	${CPP} -c -g $< ${CPPFLAGS} 
 
 mainfree.o: mainfree.cpp
-	${CPP} -c -g $<
+	${CPP} -c -g $< ${CPPFLAGS} 
 
 renderobject.o: renderobject.cpp renderobject.h
-	${CPP} -c -g $<
+	${CPP} -c -g $< ${CPPFLAGS} 
 
 renderer.o: renderer.cpp renderer.h renderobject.h
-	${CPP} -c -g $<
+	${CPP} -c -g $< ${CPPFLAGS} 
 
 init_stuff.o: init_stuff.c init_stuff.h
 	${CC} -c -g init_stuff.c

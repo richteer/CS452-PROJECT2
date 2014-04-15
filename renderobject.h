@@ -20,6 +20,7 @@ class RenderObject {
 		~RenderObject();
 
 		void setPosition(point other) { this->pos = other; }
+		void modPosition(float);
 		point getPosition(void) { return this->pos; }
 
 		void setAngle(float other) { this->angle = other; }
@@ -27,6 +28,7 @@ class RenderObject {
 		void modAngle(float other) { this->angle += other; } 
 	
 		void modMotion(motion other) { this->mot.x += other.x; this->mot.y += other.y; }
+		void modMotion(float);
 		void setMotion(motion other) { this->mot = other; }
 
 		void move(void);
@@ -34,7 +36,7 @@ class RenderObject {
 		COORD_TYPE* data;
 		int size;
 
-	private:
+//	private:
 		point pos;
 		float angle;
 		motion mot;

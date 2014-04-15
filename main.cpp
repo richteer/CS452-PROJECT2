@@ -7,17 +7,11 @@
 #include "init_stuff.h"
 #include "renderobject.h"
 #include "renderer.h"
+#include "ship.h"
 
 unsigned int prog;
 
-float temp[12] = {
-	-0.5f,-0.5f,0.0f,
-	-0.5f, 0.5f,0.0f,
-	 0.5f, 0.5f,0.0f,
-	 0.5f,-0.5f,0.0f
-};
-
-RenderObject *test = new RenderObject(temp,12);
+RenderObject * players[2];
 
 void init(void)
 {
@@ -28,22 +22,40 @@ void init(void)
 	}
 
 	glUseProgram(prog);
+	
+	init_renderer(prog);
+
+	players[0] = genShip();
+	players[1] = genShip();
+
 }
 
 void show_stuff(void)
 {
-	render(test);
+//	players[0]->move();
+//	players[1]->move();
+	printf("(%f,%f)\n",players[0]->pos.x,players[0]->pos.y);
+	render(players, 2);
 }
 
 void on_key(unsigned char c, int x, int y)
 {
 	switch(c) {
-		case 'a':
-			test->modAngle(-0.1f);
-			break;		
-		case 'd':
-			test->modAngle(0.1f);
-			break;		
+
+		// Player 1
+
+		case 'w': players[0]->modPosition(0.1f);  break;
+		case 's': players[0]->modPosition(-0.1f); break;
+		case 'a': players[0]->modAngle(0.1f);   break;
+		case 'd': players[0]->modAngle(-0.1f);  break;		
+
+
+
+		// Player 2
+		case 'k': players[1]->modPosition(0.1f);  break;
+		case 'j': players[1]->modPosition(-0.1f); break;
+		case 'h': players[1]->modAngle(0.1f);   break;
+		case 'l': players[1]->modAngle(-0.1f);  break;
 	}
 
 	glutPostRedisplay();
@@ -52,7 +64,7 @@ void on_key(unsigned char c, int x, int y)
 int main(int argc, char** argv)
 {
 	glutInit(&argc,argv);
-	glutCreateWindow("Blerp");
+	glutCreateWindow("Spacewar");
 
 	glutInitContextVersion(4,3);
 	glutInitContextProfile(GLUT_CORE_PROFILE | GLUT_COMPATIBILITY_PROFILE);

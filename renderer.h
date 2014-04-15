@@ -5,6 +5,8 @@
 #include "renderobject.h"
 
 //bool init(void);
-void render(RenderObject*);
+void init_renderer(int);
+void render(RenderObject**,int);
+
 
 #endif
