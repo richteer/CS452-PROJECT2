@@ -2,6 +2,8 @@
 #define _renderobject_h_
 
 #include <stdlib.h>
+#include "bulletmap.h"
+
 #define COORD_TYPE float
 
 struct point {
@@ -21,6 +23,7 @@ class RenderObject {
 
 		void setPosition(point other) { this->pos = other; }
 		void modPosition(float);
+		void modPosition(motion);
 		point getPosition(void) { return this->pos; }
 
 		void setAngle(float other) { this->angle = other; }
@@ -32,6 +35,8 @@ class RenderObject {
 		void setMotion(motion other) { this->mot = other; }
 
 		void move(void);
+		void shoot(BulletMap*);
+
 
 		COORD_TYPE* data;
 		int size;
@@ -41,6 +46,8 @@ class RenderObject {
 		float angle;
 		motion mot;
 		float weight;
+		float color[4];
+
 };
 
 #endif

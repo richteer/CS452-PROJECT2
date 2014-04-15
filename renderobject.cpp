@@ -30,9 +30,22 @@ RenderObject::~RenderObject()
 
 void RenderObject::modPosition(float mod)
 {
-	pos.x += cos(this->angle)*mod;
-	pos.y += sin(this->angle)*mod;
+//	pos.x += cos(this->angle)*mod;
+//	pos.y += sin(this->angle)*mod;
+	motion m;
+	m.x = mod*cos(angle);
+	m.y = mod*sin(angle);
 
+	this->modPosition(m);
+}
+
+void RenderObject::modPosition(motion m)
+{
+	float dx = pos.x + m.x;
+	float dy = pos.y + m.y;
+
+	pos.x = (abs(dx) >= WINDOW_X) ? -(dx/abs(dx)) * WINDOW_X : pos.x + m.x;
+	pos.y = (abs(dy) >= WINDOW_Y) ? -(dy/abs(dy)) * WINDOW_Y : pos.y + m.y;
 
 }
 
@@ -45,10 +58,11 @@ void RenderObject::modMotion(float mod)
 
 void RenderObject::move(void)
 {
-	this->pos.x += this->mot.x;
-	this->pos.y += this->mot.y;
-	printf("moving to (%d,%d)\n",this->pos.x,this->pos.y);
+	//this->modPosition(this->mot);
+	this->modPosition(1.0f);
+}
 
-	/* REDUCE MOTION HERE BASED ON WEIGHT? */
-
+void RenderObject::shoot(BulletMap * bullets)
+{
+	bullets->addBullet(this->pos.x + 10*cos(this->angle), this->pos.y + 10*sin(this->angle), this->angle);
 }
