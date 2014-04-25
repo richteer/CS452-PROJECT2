@@ -20,7 +20,7 @@ bulletmap.o: bulletmap.cpp bulletmap.h
 	${CPP} -c -g $< ${CPPFLAGS} 
 
 renderer.o: renderer.cpp renderer.h renderobject.h
-	${CPP} -c -g $< ${CPPFLAGS} 
+	${CPP} -c -g $< ${CPPFLAGS}
 
 init_stuff.o: init_stuff.c init_stuff.h
 	${CC} -c -g init_stuff.c

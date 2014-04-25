@@ -1,6 +1,10 @@
 #define GL_GLEXT_PROTOTYPES
 #include <GL/gl.h>
 #include <GL/glu.h>
+#define GLM_FORCE_RADIANS
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <iostream>
 #include "renderer.h"
@@ -23,10 +27,12 @@ void init_renderer(int ship, int bull)
 	bull_program = bull;
 }
 
-
+#define NEAR ((GLfloat).1)
+#define FAR ((GLfloat)100.)
+#define FOV ((GLfloat)57.)
 void render(RenderObject ** obj, int num)
 {
-	int ang_loc, pos_loc, win_loc, col_loc;
+	int ang_loc, pos_loc, win_loc, col_loc, pro_loc;
 	point p;
 	
 	glUseProgram(ship_program);
@@ -35,6 +41,9 @@ void render(RenderObject ** obj, int num)
 	pos_loc = glGetUniformLocation(ship_program,"position");
 	win_loc = glGetUniformLocation(ship_program,"window");
 	col_loc = glGetUniformLocation(ship_program,"color");
+	pro_loc = glGetUniformLocation(ship_program,"proj");
+
+	glm::mat4 proj = glm::perspective(57.0f, (float) WINDOW_X/(float) WINDOW_Y, -0.5f , 10.0f);
 	
 	for (int i = 0; i < num; i++) {
 		p = obj[i]->getPosition();
@@ -44,6 +53,8 @@ void render(RenderObject ** obj, int num)
 		glUniform2f(pos_loc,p.x,p.y); 
 		glUniform2f(win_loc,(float) WINDOW_X,(float) WINDOW_Y);
 		glUniform4fv(col_loc,1,obj[i]->color);	
+		glUniformMatrix4fv(pro_loc, 16, GL_TRUE, (const float*) glm::value_ptr(proj));
+
 	
 		glBindVertexArray(vao);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);

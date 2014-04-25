@@ -58,7 +58,7 @@ void RenderObject::modMotion(float mod)
 
 void RenderObject::move(void)
 {
-	//this->modPosition(this->mot);
+//	this->modPosition(this->mot);
 	this->modPosition(1.0f);
 }
 

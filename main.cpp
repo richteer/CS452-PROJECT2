@@ -12,7 +12,7 @@
 #include "renderer.h"
 #include "ship.h"
 
-#define BULLET_RATE 20
+#define BULLET_RATE 50
 
 unsigned char keys[128] = {0};
 
